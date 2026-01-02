@@ -8,6 +8,8 @@ Minimal AI-powered Document Intelligence and Contradiction Detection
 
 Follow these steps to run the project locally.
 
+---
+
 ### 1️⃣ Clone this repository
 
 You can fork it first or clone directly:
@@ -16,123 +18,142 @@ You can fork it first or clone directly:
 git clone https://github.com/satyam-mohanty/knot.git
 cd knot
 2️⃣ Install dependencies
+sh
+Copy code
 npm install
-
-
 or
 
+sh
+Copy code
 yarn install
-
 3️⃣ Add your Gemini API Key
-
 Your project includes a utils folder.
 
-Create or replace the file:
+Create a file named:
 
+lua
+Copy code
 .env.local
 Inside it, add:
 
+ini
+Copy code
 GEMINI_API_KEY=your_real_api_key_here
-
-
 🔒 Make sure .env.local stays out of GitHub.
 
 4️⃣ Update the AI model for best results
-
 Find the code where Gemini requests are made.
-It will look like:
+It will look like this:
 
+js
+Copy code
 const response = await ai.models.generateContent({ 
   model: "gemini-2.5-flash",
   contents: {
     // your prompt or data
   }
 });
-
-
 Change it to:
 
+js
+Copy code
 model: "gemini-2.5-pro"
-
-
 Ensure your API key is loaded correctly.
 
 5️⃣ Run the development server
+sh
+Copy code
 npm run dev
-
-
 Then open:
 
+arduino
+Copy code
 http://localhost:3000
-
-
 Your app should now be running.
 
-## 🧠 **What is knot?**
-
-**knot** is a minimal AI-driven web application that analyzes long policy and contract documents to detect contradictions between clauses. It is designed as a sharp, lightweight MVP suitable for hackathons and early product prototyping.
+🧠 What is knot?
+knot is a minimal AI-driven web application that analyzes long policy and contract documents to detect contradictions between clauses. It is designed as a sharp, lightweight MVP suitable for hackathons and early product prototyping.
 
 Users can upload documents, and the system:
 
-- Segments text into meaningful clauses  
-- Finds semantically similar clauses  
-- Detects contradictions  
-- Classifies conflict types  
-- Explains the issue in readable language  
+Segments text into meaningful clauses
 
-The goal is to make reviewing dense legal or policy text **faster, clearer, and more reliable.**
+Finds semantically similar clauses
 
----
+Detects contradictions
 
-## 🚀 **Core Features**
+Classifies conflict types
 
-- Upload multiple documents  
-- Automatic clause segmentation  
-- Semantic contradiction detection  
-- Classification of conflict types  
-- Severity scoring  
-- Human-readable explanations  
-- Clean review dashboard  
+Explains the issue in readable language
 
----
+The goal is to make reviewing dense legal or policy text faster, clearer, and more reliable.
 
-## 🛠 **Tech Stack**
+🚀 Core Features
+Upload multiple documents
 
-- **Frontend:** React / Next.js  
-- **Backend:** Node / API routes  
-- **AI:** Gemini API  
-- **Styling:** Tailwind CSS  
+Automatic clause segmentation
 
----
+Semantic contradiction detection
 
-## 🧪 **How It Works (High Level)**
+Classification of conflict types
 
-1. User uploads one or more documents  
-2. Text is extracted and split into clauses  
-3. Clauses are semantically analyzed  
-4. Similar clauses are matched  
-5. Logical and numerical contradictions are detected  
-6. Findings are displayed with severity and explanation  
+Severity scoring
 
----
+Human-readable explanations
 
-## ⚠️ **Disclaimer**
+Clean review dashboard
 
-This tool does **not** replace legal review.  
-It is intended as a **decision-support assistant only.**
+🛠 Tech Stack
+Frontend: React / Next.js
 
----
+Backend: Node / API routes
 
-## 🛤 **Roadmap**
+AI: Gemini API
 
-- PDF export for reports  
-- Role-based access  
-- Better clause scoring  
-- Highlighting inside text  
-- Domain-tuned improvements  
+Styling: Tailwind CSS
 
----
+🧪 How It Works (High Level)
+User uploads one or more documents
 
-## 🤝 **Contributing**
+Text is extracted and split into clauses
 
+Clauses are semantically analyzed
+
+Similar clauses are matched
+
+Logical and numerical contradictions are detected
+
+Findings are displayed with severity and explanation
+
+⚠️ Disclaimer
+This tool does not replace legal review.
+It is intended as a decision-support assistant only.
+
+🛤 Roadmap
+PDF export for reports
+
+Role-based access
+
+Better clause scoring
+
+Highlighting inside text
+
+Domain-tuned improvements
+
+🤝 Contributing
 Contributions and issues are welcome.
+
+yaml
+Copy code
+
+---
+
+If this still ends up rendering wrong, then something in your editor is eating backticks for breakfast. But this version is clean.
+
+Now breathe. Markdown isn’t out to kill you. It just acts like it sometimes.
+
+
+
+
+
+
