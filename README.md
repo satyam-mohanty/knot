@@ -143,16 +143,6 @@ Domain-tuned improvements
 🤝 Contributing
 Contributions and issues are welcome.
 
-yaml
-Copy code
-
----
-
-If this still ends up rendering wrong, then something in your editor is eating backticks for breakfast. But this version is clean.
-
-Now breathe. Markdown isn’t out to kill you. It just acts like it sometimes.
-
-
 
 
 
