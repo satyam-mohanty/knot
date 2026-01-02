@@ -68,80 +68,71 @@ http://localhost:3000
 
 Your app should now be running.
 
-🧠 What is knot?
+## 🧠 **What is knot?**
 
-knot is a minimal AI-driven web application that analyzes long policy and contract documents to detect contradictions between clauses. It is designed as a sharp, lightweight MVP suitable for hackathons and early product prototyping.
+**knot** is a minimal AI-driven web application that analyzes long policy and contract documents to detect contradictions between clauses. It is designed as a sharp, lightweight MVP suitable for hackathons and early product prototyping.
 
 Users can upload documents, and the system:
 
-Segments text into meaningful clauses
+- Segments text into meaningful clauses  
+- Finds semantically similar clauses  
+- Detects contradictions  
+- Classifies conflict types  
+- Explains the issue in readable language  
 
-Finds semantically similar clauses
+The goal is to make reviewing dense legal or policy text **faster, clearer, and more reliable.**
 
-Detects contradictions
+---
 
-Classifies conflict types
+## 🚀 **Core Features**
 
-Explains the issue in readable language
+- Upload multiple documents  
+- Automatic clause segmentation  
+- Semantic contradiction detection  
+- Classification of conflict types  
+- Severity scoring  
+- Human-readable explanations  
+- Clean review dashboard  
 
-The goal is to make reviewing dense legal or policy text faster, clearer, and more reliable.
+---
 
-🚀 Core Features
+## 🛠 **Tech Stack**
 
-Upload multiple documents
+- **Frontend:** React / Next.js  
+- **Backend:** Node / API routes  
+- **AI:** Gemini API  
+- **Styling:** Tailwind CSS  
 
-Automatic clause segmentation
+---
 
-Semantic contradiction detection
+## 🧪 **How It Works (High Level)**
 
-Classification of conflict types
+1. User uploads one or more documents  
+2. Text is extracted and split into clauses  
+3. Clauses are semantically analyzed  
+4. Similar clauses are matched  
+5. Logical and numerical contradictions are detected  
+6. Findings are displayed with severity and explanation  
 
-Severity scoring
+---
 
-Human-readable explanations
+## ⚠️ **Disclaimer**
 
-Clean review dashboard
+This tool does **not** replace legal review.  
+It is intended as a **decision-support assistant only.**
 
-🛠 Tech Stack
+---
 
-Frontend: React / Next.js
+## 🛤 **Roadmap**
 
-Backend: Node / API routes
+- PDF export for reports  
+- Role-based access  
+- Better clause scoring  
+- Highlighting inside text  
+- Domain-tuned improvements  
 
-AI: Gemini API
+---
 
-Styling: Tailwind CSS
-
-🧪 How It Works (High Level)
-
-User uploads one or more documents
-
-Text is extracted and split into clauses
-
-Clauses are semantically analyzed
-
-Similar clauses are matched
-
-Logical and numerical contradictions are detected
-
-Findings are displayed with severity and explanation
-
-⚠️ Disclaimer
-
-This tool does not replace legal review. It is intended as a decision-support assistant only.
-
-🛤 Roadmap
-
-PDF export for reports
-
-Role-based access
-
-Better clause scoring
-
-Highlighting inside text
-
-Domain-tuned improvements
-
-🤝 Contributing
+## 🤝 **Contributing**
 
 Contributions and issues are welcome.
