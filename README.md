@@ -67,3 +67,81 @@ http://localhost:3000
 
 
 Your app should now be running.
+
+🧠 What is knot?
+
+knot is a minimal AI-driven web application that analyzes long policy and contract documents to detect contradictions between clauses. It is designed as a sharp, lightweight MVP suitable for hackathons and early product prototyping.
+
+Users can upload documents, and the system:
+
+Segments text into meaningful clauses
+
+Finds semantically similar clauses
+
+Detects contradictions
+
+Classifies conflict types
+
+Explains the issue in readable language
+
+The goal is to make reviewing dense legal or policy text faster, clearer, and more reliable.
+
+🚀 Core Features
+
+Upload multiple documents
+
+Automatic clause segmentation
+
+Semantic contradiction detection
+
+Classification of conflict types
+
+Severity scoring
+
+Human-readable explanations
+
+Clean review dashboard
+
+🛠 Tech Stack
+
+Frontend: React / Next.js
+
+Backend: Node / API routes
+
+AI: Gemini API
+
+Styling: Tailwind CSS
+
+🧪 How It Works (High Level)
+
+User uploads one or more documents
+
+Text is extracted and split into clauses
+
+Clauses are semantically analyzed
+
+Similar clauses are matched
+
+Logical and numerical contradictions are detected
+
+Findings are displayed with severity and explanation
+
+⚠️ Disclaimer
+
+This tool does not replace legal review. It is intended as a decision-support assistant only.
+
+🛤 Roadmap
+
+PDF export for reports
+
+Role-based access
+
+Better clause scoring
+
+Highlighting inside text
+
+Domain-tuned improvements
+
+🤝 Contributing
+
+Contributions and issues are welcome.
