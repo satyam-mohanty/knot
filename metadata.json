@@ -1,0 +1,5 @@
+{
+  "name": "Knot",
+  "description": "AI-powered legal document auditor that detects contradictions, inconsistencies, and ambiguities across PDF contracts using Gemini 1.5 Pro technology.",
+  "requestFramePermissions": []
+}
