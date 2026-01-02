@@ -1,6 +1,6 @@
-import React from 'react';
 import { AnalysisResponse, Severity, IssueType } from '../types';
 import { AlertTriangle, AlertOctagon, Info, CheckCircle2, FileSearch } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface AnalysisResultsProps {
   data: AnalysisResponse | null;
@@ -11,9 +11,14 @@ const SeverityBadge: React.FC<{ severity: Severity }> = ({ severity }) => {
   switch (severity) {
     case Severity.CRITICAL:
       return (
-        <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-red-50 text-red-700 border border-red-100">
-          <AlertOctagon className="w-3 h-3 mr-1.5" />
-          Critical Risk
+        <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-red-50 text-red-700 border border-red-100 relative overflow-hidden">
+          <motion.div 
+            className="absolute inset-0 bg-red-200/20"
+            animate={{ opacity: [0, 1, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+          <AlertOctagon className="w-3 h-3 mr-1.5 relative z-10" />
+          <span className="relative z-10">Critical Risk</span>
         </span>
       );
     case Severity.MODERATE:
@@ -46,12 +51,20 @@ const TypeBadge: React.FC<{ type: IssueType }> = ({ type }) => {
 const AnalysisResults: React.FC<AnalysisResultsProps> = ({ data, loading }) => {
   if (loading) {
     return (
-      <div className="w-full py-20 flex flex-col items-center justify-center text-center animate-pulse">
+      <div className="w-full py-20 flex flex-col items-center justify-center text-center">
         <div className="relative mb-8">
-            <div className="h-20 w-20 rounded-full border-[3px] border-zinc-100 border-t-zinc-900 animate-spin"></div>
-            <div className="absolute inset-0 flex items-center justify-center">
+            <motion.div 
+                className="h-20 w-20 rounded-full border-[3px] border-zinc-100 border-t-zinc-900"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div 
+                className="absolute inset-0 flex items-center justify-center"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+            >
                 <FileSearch className="h-8 w-8 text-zinc-900" />
-            </div>
+            </motion.div>
         </div>
         <h3 className="text-xl font-semibold text-zinc-900">Analyzing Documents</h3>
         <p className="text-zinc-500 mt-2 max-w-sm">Knot is reading your contracts and cross-referencing clauses...</p>
@@ -98,10 +111,27 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ data, loading }) => {
             </span>
         </div>
         
-        <div className="space-y-6">
+        <motion.div 
+          className="space-y-6"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1
+              }
+            }
+          }}
+        >
           {data.issues.map((issue) => (
-            <div 
+            <motion.div 
               key={issue.id} 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
               className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6 md:p-8 transition-all hover:shadow-md hover:border-zinc-300"
             >
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
@@ -149,19 +179,23 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ data, loading }) => {
                     </div>
                 )}
               </div>
-            </div>
+            </motion.div>
           ))}
           
           {data.issues.length === 0 && (
-            <div className="flex flex-col items-center justify-center py-16 bg-white rounded-2xl border border-dashed border-zinc-300">
+            <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex flex-col items-center justify-center py-16 bg-white rounded-2xl border border-dashed border-zinc-300"
+            >
                 <div className="bg-emerald-50 p-4 rounded-full mb-4">
                     <CheckCircle2 className="h-8 w-8 text-emerald-500" />
                 </div>
                 <h3 className="text-lg font-bold text-zinc-900">Clean Analysis</h3>
                 <p className="text-zinc-500 mt-1">Knot detected no contradictions or major risks.</p>
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

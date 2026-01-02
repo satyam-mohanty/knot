@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { BookOpen, FileText } from 'lucide-react';
 
 
 
@@ -18,18 +20,26 @@ const Header: React.FC = () => {
               </span>
             </div>
           </div>
-          <nav className="flex gap-6">
+          <nav className="flex gap-8">
             <a 
               href="#" 
-              className="text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors"
+              className="group relative text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors py-2 flex items-center gap-2"
             >
+              <FileText className="w-4 h-4" />
               Methodology
+              <motion.span 
+                className="absolute bottom-0 left-0 w-full h-0.5 bg-zinc-900 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"
+              />
             </a>
             <a 
               href="#" 
-              className="text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors"
+              className="group relative text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors py-2 flex items-center gap-2"
             >
+              <BookOpen className="w-4 h-4" />
               Docs
+               <motion.span 
+                className="absolute bottom-0 left-0 w-full h-0.5 bg-zinc-900 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"
+              />
             </a>
           </nav>
         </div>

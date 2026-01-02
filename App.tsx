@@ -6,6 +6,7 @@ import { UploadedFile, AnalysisResponse } from './types';
 import { analyzeContracts } from './services/geminiService';
 import { fileToBase64 } from './utils/fileUtils';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const App: React.FC = () => {
   const [files, setFiles] = useState<UploadedFile[]>([]);
@@ -48,14 +49,29 @@ const App: React.FC = () => {
         
 
         {!results && !isAnalyzing && (
-            <div className="text-center mb-16 animate-fade-in-up">
-                <h1 className="text-5xl font-bold text-zinc-900 tracking-tight mb-6">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="text-center mb-16"
+            >
+                <motion.h1 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="text-5xl font-bold text-zinc-900 tracking-tight mb-6"
+                >
                     Untangle <span className="text-zinc-500">Legal Complexity</span>
-                </h1>
-                <p className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+                </motion.h1>
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.6 }}
+                  className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed"
+                >
                     Knot uses advanced AI to audit contracts, identifying contradictions and hidden liabilities across your legal documents instantly.
-                </p>
-            </div>
+                </motion.p>
+            </motion.div>
         )}
 
 
