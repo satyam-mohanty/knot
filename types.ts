@@ -16,7 +16,7 @@ export interface AnalysisIssue {
   type: IssueType;
   title: string;
   description: string;
-  sourceDoc1?: string;
+  sourceDoc1?: string; 
   sourceDoc2?: string;
   pageRef?: string;
   recommendation?: string;

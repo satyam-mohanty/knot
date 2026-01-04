@@ -6,7 +6,6 @@ import { UploadedFile, AnalysisResponse } from './types';
 import { analyzeContracts } from './services/geminiService';
 import { fileToBase64 } from './utils/fileUtils';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const App: React.FC = () => {
   const [files, setFiles] = useState<UploadedFile[]>([]);
@@ -22,6 +21,7 @@ const App: React.FC = () => {
     setResults(null);
 
     try {
+  
       const base64Promises = files.map(f => fileToBase64(f.file));
       const base64Files = await Promise.all(base64Promises);
 
@@ -42,41 +42,24 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 flex flex-col font-sans text-zinc-900">
+    <div className="min-h-screen bg-white flex flex-col font-sans text-zinc-900">
       <Header />
 
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        
+      <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
         {!results && !isAnalyzing && (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-center mb-16"
-            >
-                <motion.h1 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
-                  className="text-5xl font-bold text-zinc-900 tracking-tight mb-6"
-                >
-                    Untangle <span className="text-zinc-500">Legal Complexity</span>
-                </motion.h1>
-                <motion.p 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  className="text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed"
-                >
+            <div className="text-center mb-12 animate-fade-in-up">
+                <h1 className="text-5xl md:text-6xl font-bold text-zinc-900 tracking-tight mb-6">
+                    Untangle <span className="text-zinc-200">Legal Complexity</span>
+                </h1>
+                <p className="text-lg text-zinc-100/80 text-zinc-400 max-w-2xl mx-auto leading-relaxed">
                     Knot uses advanced AI to audit contracts, identifying contradictions and hidden liabilities across your legal documents instantly.
-                </motion.p>
-            </motion.div>
+                </p>
+            </div>
         )}
 
-
-        <div className={`bg-white rounded-3xl shadow-xl shadow-zinc-200/50 border border-white overflow-hidden transition-all duration-700 ease-in-out ${results ? 'mb-10 ring-1 ring-zinc-100' : 'mb-0'}`}>
-            <div className="p-8 md:p-10">
+        <div className={`bg-white rounded-3xl shadow-2xl shadow-zinc-200/50 border border-zinc-100 overflow-hidden transition-all duration-700 ease-in-out ${results ? 'mb-10 ring-1 ring-zinc-100' : 'mb-0'}`}>
+            <div className="p-8 md:p-12">
                 <FileUpload 
                     files={files} 
                     setFiles={setFiles} 
@@ -90,14 +73,14 @@ const App: React.FC = () => {
                 )}
 
                 {!results && (
-                    <div className="mt-10 flex justify-end">
+                    <div className="mt-8 flex justify-end">
                         <button
                             onClick={handleAnalyze}
                             disabled={files.length === 0 || isAnalyzing}
-                            className={`flex items-center px-8 py-4 rounded-full font-medium text-white shadow-lg transition-all transform hover:-translate-y-0.5
+                            className={`flex items-center px-6 py-3 rounded-full font-medium text-sm transition-all transform
                                 ${files.length === 0 || isAnalyzing 
-                                    ? 'bg-zinc-300 cursor-not-allowed shadow-none transform-none text-zinc-500' 
-                                    : 'bg-zinc-900 hover:bg-black shadow-zinc-300'
+                                    ? 'bg-zinc-200 cursor-not-allowed text-zinc-500' 
+                                    : 'bg-zinc-900 hover:bg-black text-white shadow-lg hover:-translate-y-0.5'
                                 }
                             `}
                         >
@@ -114,7 +97,6 @@ const App: React.FC = () => {
                     </div>
                 )}
             </div>
-            
 
             {results && (
                 <div className="bg-zinc-50 border-t border-zinc-100 px-8 py-4 flex justify-between items-center">
@@ -129,12 +111,9 @@ const App: React.FC = () => {
             )}
         </div>
 
-
         <AnalysisResults data={results} loading={isAnalyzing} />
 
       </main>
-
-
     </div>
   );
 };

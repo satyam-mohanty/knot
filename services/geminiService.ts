@@ -65,14 +65,14 @@ export const analyzeContracts = async (
     `;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-3-pro-preview", 
       contents: {
         parts: [...parts, { text: promptText }],
       },
       config: {
         responseMimeType: "application/json",
         responseSchema: analysisSchema,
-        temperature: 0.2,
+        temperature: 0.2, 
       },
     });
 

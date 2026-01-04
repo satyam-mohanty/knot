@@ -1,149 +1,84 @@
-# knot
+# Knot - Document Intelligence with Contradiction Detection
 
-Minimal AI-powered Document Intelligence and Contradiction Detection
+Knot is an advanced document analysis tool designed to identify contradictions, risks, and inconsistencies in contracts and other legal documents. Powered by AI, Knot provides a detailed analysis summary, highlights critical and moderate risks, and offers actionable recommendations to improve document integrity.
 
----
+## Features
 
-## ⚙️ Setup & Installation (Start Here)
+- **Document Analysis**: Automatically scans and analyzes contracts for contradictions and risks.
+- **Severity Detection**: Categorizes issues into critical, moderate, and low severity levels.
+- **Issue Summaries**: Provides detailed descriptions of detected issues, including conflicting clauses and recommendations.
+- **Real-Time Feedback**: Displays results dynamically while processing documents.
+- **User-Friendly Interface**: Intuitive design for easy navigation and understanding of results.
 
-Follow these steps to run the project locally.
+## Installation
 
----
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/knot-document-intelligence.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd "Knot - Document Intelligence with Contradiction Detection"
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Add your API key:
+   - Create a `.env` file in the root directory.
+   - Add your API key to the file:
+     ```
+     API_KEY=your-api-key-here
+     ```
+   - Replace `your-api-key-here` with your actual API key.
 
-### 1️⃣ Clone this repository
+## Usage
 
-You can fork it first or clone directly:
+1. Start the development server:
+   ```bash
+   npm run dev
+   ```
+2. Open your browser and navigate to:
+   ```
+   http://localhost:3000
+   ```
+3. Upload your document(s) for analysis and view the results.
 
-```sh
-git clone https://github.com/satyam-mohanty/knot.git
-cd knot
-2️⃣ Install dependencies
-sh
-Copy code
-npm install
-or
+## Project Structure
 
-sh
-Copy code
-yarn install
-3️⃣ Add your Gemini API Key
-Your project includes a utils folder.
+- **components/**: Contains reusable React components, such as `AnalysisResults`.
+- **types/**: Defines TypeScript types and interfaces used throughout the project.
+- **public/**: Static assets like images and icons.
+- **styles/**: Global and component-specific styles.
 
-Create a file named:
+## Technologies Used
 
-lua
-Copy code
-.env.local
-Inside it, add:
+- **React**: Frontend framework for building the user interface.
+- **TypeScript**: Ensures type safety and improves code maintainability.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+- **Lucide Icons**: Icon library for visual elements.
+- **Node.js**: Backend runtime for development.
 
-ini
-Copy code
-GEMINI_API_KEY=your_real_api_key_here
-🔒 Make sure .env.local stays out of GitHub.
+## Contributing
 
-4️⃣ Update the AI model for best results
-Find the code where Gemini requests are made.
-It will look like this:
+Contributions are welcome! If you'd like to improve this project, please follow these steps:
 
-js
-Copy code
-const response = await ai.models.generateContent({ 
-  model: "gemini-2.5-flash",
-  contents: {
-    // your prompt or data
-  }
-});
-Change it to:
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Make your changes and commit them:
+   ```bash
+   git commit -m "Add your commit message"
+   ```
+4. Push to your branch:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. Open a pull request.
 
-js
-Copy code
-model: "gemini-2.5-pro"
-Ensure your API key is loaded correctly.
+## License
 
-5️⃣ Run the development server
-sh
-Copy code
-npm run dev
-Then open:
-
-arduino
-Copy code
-http://localhost:3000
-Your app should now be running.
-
-🧠 What is knot?
-knot is a minimal AI-driven web application that analyzes long policy and contract documents to detect contradictions between clauses. It is designed as a sharp, lightweight MVP suitable for hackathons and early product prototyping.
-
-Users can upload documents, and the system:
-
-Segments text into meaningful clauses
-
-Finds semantically similar clauses
-
-Detects contradictions
-
-Classifies conflict types
-
-Explains the issue in readable language
-
-The goal is to make reviewing dense legal or policy text faster, clearer, and more reliable.
-
-🚀 Core Features
-Upload multiple documents
-
-Automatic clause segmentation
-
-Semantic contradiction detection
-
-Classification of conflict types
-
-Severity scoring
-
-Human-readable explanations
-
-Clean review dashboard
-
-🛠 Tech Stack
-Frontend: React / Next.js
-
-Backend: Node / API routes
-
-AI: Gemini API
-
-Styling: Tailwind CSS
-
-🧪 How It Works (High Level)
-User uploads one or more documents
-
-Text is extracted and split into clauses
-
-Clauses are semantically analyzed
-
-Similar clauses are matched
-
-Logical and numerical contradictions are detected
-
-Findings are displayed with severity and explanation
-
-⚠️ Disclaimer
-This tool does not replace legal review.
-It is intended as a decision-support assistant only.
-
-🛤 Roadmap
-PDF export for reports
-
-Role-based access
-
-Better clause scoring
-
-Highlighting inside text
-
-Domain-tuned improvements
-
-🤝 Contributing
-Contributions and issues are welcome.
-
-
-
-
+This project is licensed under the [MIT License](LICENSE).
 
