@@ -1,7 +1,6 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { AnalysisResponse, Severity, IssueType, AnalysisMode } from "../types";
 
-// Define the schema for structured output with "Plain English" constraints
 const analysisSchema: Schema = {
   type: Type.OBJECT,
   properties: {
