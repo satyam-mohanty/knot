@@ -1,7 +1,6 @@
 <div align="center">
 
-  <br />
-  <img src="https://via.placeholder.com/150?text=Knot+Logo" alt="Knot Logo" width="100" height="100">
+  <br /> 
 
   <h1 align="center">Knot</h1>
 
@@ -10,10 +9,7 @@
   <p align="center">
     An advanced AI-powered tool to unravel legal complexities, identify risks, and ensure document integrity.
     <br />
-    <br />
-    <a href="https://github.com/satyam-mohanty/knot-document-intelligence/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/satyam-mohanty/knot-document-intelligence/pulls">Request Feature</a>
+    <br />    
   </p>
 
   ![License](https://img.shields.io/badge/License-MIT-blue.svg)
