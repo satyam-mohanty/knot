@@ -7,7 +7,9 @@ export enum Severity {
 export enum IssueType {
   CONTRADICTION = 'CONTRADICTION',
   AMBIGUITY = 'AMBIGUITY',
-  RISK = 'RISK'
+  RISK = 'RISK',
+  CHANGE = 'CHANGE',
+  MISSING = 'MISSING'
 }
 
 export interface AnalysisIssue {
@@ -17,13 +19,23 @@ export interface AnalysisIssue {
   title: string;
   description: string;
   sourceDoc1?: string; 
-  sourceDoc2?: string;
+  sourceDoc2?: string; 
   pageRef?: string;
   recommendation?: string;
 }
 
+export interface RiskAssessment {
+  score: number; 
+  level: 'LOW' | 'MODERATE' | 'HIGH' | 'CRITICAL';
+  financialImpact: string; 
+  legalDomain: string; 
+  primaryBeneficiary: string; 
+  explanation: string; 
+}
+
 export interface AnalysisResponse {
   summary: string;
+  riskAssessment: RiskAssessment;
   issues: AnalysisIssue[];
 }
 
@@ -32,3 +44,5 @@ export interface UploadedFile {
   preview?: string;
   base64?: string;
 }
+
+export type AnalysisMode = 'ANALYSIS' | 'COMPARISON';
