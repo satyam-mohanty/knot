@@ -1,12 +1,43 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
-import { AnalysisResponse, Severity, IssueType } from "../types";
+import { AnalysisResponse, Severity, IssueType, AnalysisMode } from "../types";
 
 const analysisSchema: Schema = {
   type: Type.OBJECT,
   properties: {
     summary: {
       type: Type.STRING,
-      description: "A high-level executive summary of the contract analysis, highlighting major risks.",
+      description: "A simple, non-technical summary of the 3 biggest problems. Write this like you are explaining it to a friend. No legal jargon.",
+    },
+    riskAssessment: {
+      type: Type.OBJECT,
+      properties: {
+        score: { 
+          type: Type.INTEGER, 
+          description: "Risk score 0-100." 
+        },
+        level: { 
+          type: Type.STRING, 
+          enum: ["LOW", "MODERATE", "HIGH", "CRITICAL"],
+          description: "Qualitative level."
+        },
+        financialImpact: { 
+          type: Type.STRING, 
+          description: "Simple money terms. (e.g., 'You pay for their mistakes', 'Unlimited Cost', '$50k Max')." 
+        },
+        legalDomain: { 
+          type: Type.STRING, 
+          description: "Simple category (e.g., 'Copying Rights', 'Safety', 'Deadlines')." 
+        },
+        primaryBeneficiary: { 
+          type: Type.STRING, 
+          description: "Who wins here? (e.g., 'Them', 'You', 'Both')." 
+        },
+        explanation: {
+          type: Type.STRING,
+          description: "Max 10 words. Simple reason (e.g., 'Too many unfair rules')."
+        }
+      },
+      required: ["score", "level", "financialImpact", "legalDomain", "primaryBeneficiary", "explanation"]
     },
     issues: {
       type: Type.ARRAY,
@@ -20,24 +51,31 @@ const analysisSchema: Schema = {
           },
           type: { 
             type: Type.STRING, 
-            enum: [IssueType.CONTRADICTION, IssueType.AMBIGUITY, IssueType.RISK] 
+            enum: [
+              IssueType.CONTRADICTION, 
+              IssueType.AMBIGUITY, 
+              IssueType.RISK,
+              IssueType.CHANGE,
+              IssueType.MISSING
+            ] 
           },
-          title: { type: Type.STRING, description: "Short title of the issue" },
-          description: { type: Type.STRING, description: "Detailed explanation of the contradiction or ambiguity" },
-          sourceDoc1: { type: Type.STRING, description: "Relevant quote from the first document (or earlier clause)" },
-          sourceDoc2: { type: Type.STRING, description: "Relevant quote from the second document (or conflicting clause)" },
-          pageRef: { type: Type.STRING, description: "Page numbers or section references" },
-          recommendation: { type: Type.STRING, description: "Legal advice on how to resolve this" },
+          title: { type: Type.STRING, description: "Simple title (e.g. 'They can cancel anytime'). Max 6 words." },
+          description: { type: Type.STRING, description: "Explain the bad thing in simple, everyday language. Why does this matter? Max 2 sentences." },
+          sourceDoc1: { type: Type.STRING, description: "Short quote from Document A." },
+          sourceDoc2: { type: Type.STRING, description: "Short quote from Document B or conflicting clause." },
+          pageRef: { type: Type.STRING, description: "Page/Section ref." },
+          recommendation: { type: Type.STRING, description: "Simple advice (e.g. 'Ask them to remove this')." },
         },
         required: ["id", "severity", "type", "title", "description"],
       },
     },
   },
-  required: ["summary", "issues"],
+  required: ["summary", "issues", "riskAssessment"],
 };
 
 export const analyzeContracts = async (
-  base64Files: string[]
+  base64Files: string[],
+  mode: AnalysisMode
 ): Promise<AnalysisResponse> => {
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -49,30 +87,55 @@ export const analyzeContracts = async (
       },
     }));
 
-    const promptText = `
-      You are an expert Senior Legal Auditor and Contract Analyst. 
-      Your task is to analyze the provided legal documents (contracts, policies, MSAs, SOWs) to identify:
-      1. Logical contradictions between clauses (e.g., Clause A says X, Clause B says Y, and X != Y).
-      2. Hidden liabilities or vague terms that pose a risk.
-      3. Inconsistencies between a Master Agreement and a Statement of Work if two docs are provided.
+    let promptText = "";
 
-      Classify each finding by Severity:
-      - CRITICAL: Major legal risk, direct financial contradiction, or invalidating clause.
-      - MODERATE: Ambiguity that could lead to disputes.
-      - LOW: Minor formatting or slight inconsistency.
-
-      Provide specific quotes to back up your findings.
+    const toneInstructions = `
+      CRITICAL INSTRUCTION: WRITE IN PLAIN, EVERYDAY ENGLISH.
+      - Imagine you are explaining this to a non-expert friend.
+      - Do NOT use legal jargon (avoid words like "indemnification", "pursuant", "force majeure", "jurisdiction").
+      - Instead of legal terms, describe what actually happens (e.g., instead of "Indemnification", say "You have to pay if they get sued").
+      - Keep text CONCISE and PUNCHY.
+      - Focus on practical consequences: Money, Time, and Fairness.
     `;
 
+    if (mode === 'COMPARISON') {
+      promptText = `
+        COMPARE the two documents (Original vs New).
+        Focus on:
+        1. sneaky changes.
+        2. deleted protections.
+        3. new costs or rules added.
+        
+        ${toneInstructions}
+
+        Classify findings by Severity.
+        Use IssueType: CHANGE, MISSING, RISK.
+      `;
+    } else {
+      promptText = `
+        ANALYZE the legal documents.
+        Focus on:
+        1. Unfair rules.
+        2. Contradictions (things that don't make sense).
+        3. Confusing parts.
+        4. Missing protections that should be there.
+
+        ${toneInstructions}
+
+        Classify findings by Severity.
+        Use IssueType: CONTRADICTION, AMBIGUITY, RISK.
+      `;
+    }
+
     const response = await ai.models.generateContent({
-      model: "gemini-3-pro-preview", 
+      model: "gemini-3-pro-preview",
       contents: {
         parts: [...parts, { text: promptText }],
       },
       config: {
         responseMimeType: "application/json",
         responseSchema: analysisSchema,
-        temperature: 0.2, 
+        temperature: 0.1,
       },
     });
 
