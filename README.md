@@ -11,9 +11,9 @@
     An advanced AI-powered tool to unravel legal complexities, identify risks, and ensure document integrity.
     <br />
     <br />
-    <a href="https://github.com/your-username/knot-document-intelligence/issues">Report Bug</a>
+    <a href="https://github.com/satyam-mohanty/knot-document-intelligence/issues">Report Bug</a>
     ·
-    <a href="https://github.com/your-username/knot-document-intelligence/pulls">Request Feature</a>
+    <a href="https://github.com/satyam-mohanty/knot-document-intelligence/pulls">Request Feature</a>
   </p>
 
   ![License](https://img.shields.io/badge/License-MIT-blue.svg)
