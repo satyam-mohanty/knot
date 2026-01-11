@@ -1,25 +1,27 @@
 import React from 'react';
 import { UploadCloud, FileText, X } from 'lucide-react';
-import { UploadedFile } from '../types';
+import { UploadedFile, AnalysisMode } from '../types';
 import { formatFileSize } from '../utils/fileUtils';
 
 interface FileUploadProps {
   files: UploadedFile[];
   setFiles: React.Dispatch<React.SetStateAction<UploadedFile[]>>;
   disabled: boolean;
+  mode: AnalysisMode;
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ files, setFiles, disabled }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ files, setFiles, disabled, mode }) => {
   
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const newFiles = Array.from(event.target.files).map(file => ({
         file
       }));
-
+      
+     
       setFiles(prev => [...prev, ...newFiles].slice(0, 2));
     }
-
+   
     event.target.value = '';
   };
 
@@ -27,12 +29,17 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, setFiles, disabled }) =>
     setFiles(prev => prev.filter((_, index) => index !== indexToRemove));
   };
 
+  const isComparison = mode === 'COMPARISON';
+
   return (
     <div className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-
+        
+        {}
         <div className="flex flex-col">
-            <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-widest mb-4">Upload Contracts</h4>
+            <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-widest mb-4">
+              {isComparison ? 'Upload Versions' : 'Upload Contracts'}
+            </h4>
             
             <div className={`relative group flex-1 min-h-[20rem] border-2 border-dashed rounded-2xl flex flex-col items-center justify-center text-center transition-all duration-300 ${
             disabled 
@@ -56,14 +63,19 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, setFiles, disabled }) =>
                     <p className="text-sm font-semibold text-zinc-900">
                         <span className="cursor-pointer border-b-2 border-zinc-900 pb-0.5 hover:text-zinc-600 hover:border-zinc-600 transition-colors">Click to browse</span> or drag & drop.
                     </p>
-                    <p className="text-xs text-zinc-400 font-medium">Supports PDF (Max 2 files)</p>
+                    <p className="text-xs text-zinc-400 font-medium">
+                      {isComparison ? 'Upload Original & New Version' : 'Supports PDF (Max 2 files)'}
+                    </p>
                 </div>
             </div>
         </div>
 
+        {}
         <div className="flex flex-col">
             <div className="flex justify-between items-center mb-4">
-                <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-widest">Selected Documents</h4>
+                <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-widest">
+                   {isComparison ? 'Versions to Compare' : 'Selected Documents'}
+                </h4>
                 <span className="text-[10px] font-bold text-zinc-400 bg-zinc-100 px-2 py-1 rounded-md">{files.length}/2</span>
             </div>
             
@@ -82,7 +94,9 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, setFiles, disabled }) =>
                                     </div>
                                     <div className="min-w-0">
                                         <p className="text-sm font-semibold text-zinc-900 truncate max-w-[140px] sm:max-w-[200px]">{f.file.name}</p>
-                                        <p className="text-[10px] text-zinc-400 uppercase tracking-wide font-medium">{formatFileSize(f.file.size)}</p>
+                                        <p className="text-[10px] text-zinc-400 uppercase tracking-wide font-medium">
+                                          {formatFileSize(f.file.size)}
+                                        </p>
                                     </div>
                                 </div>
                                 {!disabled && (
