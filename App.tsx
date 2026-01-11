@@ -17,7 +17,12 @@ const App: React.FC = () => {
 
   const handleAnalyze = async () => {
     if (files.length === 0) return;
+<<<<<<< HEAD
    
+=======
+    
+    
+>>>>>>> 014ef6b31f7c9085e428d265458d8208cf3897c0
     if (mode === 'COMPARISON' && files.length < 2) {
       setError("Comparison mode requires 2 documents (Original and New Version).");
       return;
@@ -28,9 +33,17 @@ const App: React.FC = () => {
     setResults(null);
 
     try {
+<<<<<<< HEAD
       const base64Promises = files.map(f => fileToBase64(f.file));
       const base64Files = await Promise.all(base64Promises);
 
+=======
+      
+      const base64Promises = files.map(f => fileToBase64(f.file));
+      const base64Files = await Promise.all(base64Promises);
+
+      
+>>>>>>> 014ef6b31f7c9085e428d265458d8208cf3897c0
       const analysis = await analyzeContracts(base64Files, mode);
       setResults(analysis);
     } catch (err: any) {
@@ -63,8 +76,15 @@ const App: React.FC = () => {
 
       <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         
+<<<<<<< HEAD
         <div className={`text-center animate-fade-in-up transition-all duration-500 ease-in-out ${hasResults ? 'mb-8' : 'mb-12'}`}>
             
+=======
+        {}
+        <div className={`text-center animate-fade-in-up transition-all duration-500 ease-in-out ${hasResults ? 'mb-8' : 'mb-12'}`}>
+            
+            {}
+>>>>>>> 014ef6b31f7c9085e428d265458d8208cf3897c0
             <div className="inline-flex bg-zinc-100 p-1 rounded-full mb-8 relative">
                 <button
                     onClick={() => toggleMode('ANALYSIS')}
@@ -89,6 +109,11 @@ const App: React.FC = () => {
                     Compare Versions
                 </button>
             </div>
+<<<<<<< HEAD
+=======
+
+            {}
+>>>>>>> 014ef6b31f7c9085e428d265458d8208cf3897c0
             <h1 className={`font-bold text-zinc-900 tracking-tight transition-all duration-500 ${hasResults ? 'text-3xl md:text-4xl mb-4' : 'text-5xl md:text-6xl mb-6'}`}>
                 {mode === 'ANALYSIS' ? (
                     <>Untangle <span className="text-zinc-200">Legal Complexity</span></>
@@ -97,6 +122,10 @@ const App: React.FC = () => {
                 )}
             </h1>
             
+<<<<<<< HEAD
+=======
+            {}
+>>>>>>> 014ef6b31f7c9085e428d265458d8208cf3897c0
             <div className={`overflow-hidden transition-all duration-500 ${hasResults ? 'max-h-0 opacity-0' : 'max-h-24 opacity-100'}`}>
                 <p className="text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
                     {mode === 'ANALYSIS' 
@@ -107,6 +136,7 @@ const App: React.FC = () => {
             </div>
         </div>
 
+        {}
         <div className={`bg-white rounded-3xl shadow-2xl shadow-zinc-200/50 border border-zinc-100 overflow-hidden transition-all duration-700 ease-in-out ${results ? 'mb-10 ring-1 ring-zinc-100' : 'mb-0'}`}>
             <div className="p-8 md:p-12">
                 <FileUpload 
@@ -148,6 +178,10 @@ const App: React.FC = () => {
                 )}
             </div>
             
+<<<<<<< HEAD
+=======
+            {}
+>>>>>>> 014ef6b31f7c9085e428d265458d8208cf3897c0
             {results && (
                 <div className="bg-zinc-50 border-t border-zinc-100 px-8 py-4 flex justify-between items-center">
                     <span className="text-sm text-zinc-500 font-medium">
@@ -163,6 +197,7 @@ const App: React.FC = () => {
             )}
         </div>
 
+        {}
         <AnalysisResults data={results} loading={isAnalyzing} />
 
       </main>

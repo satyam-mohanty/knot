@@ -17,7 +17,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, setFiles, disabled, mode
       const newFiles = Array.from(event.target.files).map(file => ({
         file
       }));
-      
+
       setFiles(prev => [...prev, ...newFiles].slice(0, 2));
     }
    
@@ -33,7 +33,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, setFiles, disabled, mode
   return (
     <div className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-        
+
         <div className="flex flex-col">
             <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-widest mb-4">
               {isComparison ? 'Upload Versions' : 'Upload Contracts'}
@@ -68,6 +68,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, setFiles, disabled, mode
             </div>
         </div>
 
+        {}
         <div className="flex flex-col">
             <div className="flex justify-between items-center mb-4">
                 <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-widest">
