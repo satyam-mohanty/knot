@@ -6,12 +6,12 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center gap-4">
+    
             <div className="flex-shrink-0 flex items-center text-zinc-900">
               <img src="https://github.com/RupamCodes/knot/blob/main/public/mainlogo.png?raw=true$0" alt="Knot Logo" className="h-8 w-auto" />              
             </div>
-            
+
             <div className="w-px h-5 bg-zinc-300"></div>
-            
             <div>
               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em]">
                 Legal Intelligence
