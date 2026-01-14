@@ -1,7 +1,8 @@
 import React from 'react';
-import { UploadCloud, FileText, X } from 'lucide-react';
+import { UploadCloud, FileText, X, FilePlus } from 'lucide-react';
 import { UploadedFile, AnalysisMode } from '../types';
 import { formatFileSize } from '../utils/fileUtils';
+import { SAMPLE_CONTRACT } from '../utils/sampleContract';
 
 interface FileUploadProps {
   files: UploadedFile[];
@@ -20,12 +21,19 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, setFiles, disabled, mode
       
       setFiles(prev => [...prev, ...newFiles].slice(0, 2));
     }
-   
+  
     event.target.value = '';
   };
 
   const removeFile = (indexToRemove: number) => {
     setFiles(prev => prev.filter((_, index) => index !== indexToRemove));
+  };
+
+  const loadSample = () => {
+    const file = new File([SAMPLE_CONTRACT], "TechNova_MSA_Sample.txt", {
+        type: "text/plain",
+    });
+    setFiles(prev => [...prev, { file }].slice(0, 2));
   };
 
   const isComparison = mode === 'COMPARISON';
@@ -35,9 +43,20 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, setFiles, disabled, mode
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
         
         <div className="flex flex-col">
-            <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-widest mb-4">
-              {isComparison ? 'Upload Versions' : 'Upload Contracts'}
-            </h4>
+            <div className="flex justify-between items-center mb-4">
+                <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-widest">
+                  {isComparison ? 'Upload Versions' : 'Upload Contracts'}
+                </h4>
+                {!disabled && files.length < 2 && !isComparison && (
+                    <button 
+                        onClick={loadSample}
+                        className="text-[10px] font-bold uppercase tracking-wide text-zinc-500 hover:text-zinc-900 flex items-center gap-1 hover:underline decoration-zinc-300 underline-offset-4"
+                    >
+                        <FilePlus className="w-3 h-3" />
+                        Load Sample
+                    </button>
+                )}
+            </div>
             
             <div className={`relative group flex-1 min-h-[20rem] border-2 border-dashed rounded-2xl flex flex-col items-center justify-center text-center transition-all duration-300 ${
             disabled 
@@ -46,7 +65,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, setFiles, disabled, mode
             }`}>
                 <input
                     type="file"
-                    accept=".pdf"
+                    accept=".pdf,.txt"
                     multiple
                     onChange={handleFileChange}
                     disabled={disabled || files.length >= 2}
@@ -62,7 +81,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, setFiles, disabled, mode
                         <span className="cursor-pointer border-b-2 border-zinc-900 pb-0.5 hover:text-zinc-600 hover:border-zinc-600 transition-colors">Click to browse</span> or drag & drop.
                     </p>
                     <p className="text-xs text-zinc-400 font-medium">
-                      {isComparison ? 'Upload Original & New Version' : 'Supports PDF (Max 2 files)'}
+                      {isComparison ? 'Upload Original & New Version' : 'Supports PDF & TXT (Max 2 files)'}
                     </p>
                 </div>
             </div>
