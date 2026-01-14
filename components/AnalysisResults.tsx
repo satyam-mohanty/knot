@@ -15,15 +15,14 @@ import {
   Shuffle,
   Zap,
   ArrowRight,
-  PieChart
+  PieChart,
+  ShieldAlert
 } from 'lucide-react';
 
 interface AnalysisResultsProps {
   data: AnalysisResponse | null;
   loading: boolean;
 }
-
-
 const DonutChart = ({ data }: { data: { label: string; value: number; color: string; count: number }[] }) => {
   const size = 120;
   const strokeWidth = 20;
@@ -202,18 +201,18 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ data, loading }) => {
   const total = issues.length;
 
   const chartData = [
-      { label: 'Critical', value: critical, count: critical, color: '#ef4444' }, 
-      { label: 'Moderate', value: moderate, count: moderate, color: '#fbbf24' },
-      { label: 'Low', value: low, count: low, color: '#e4e4e7' }, 
+      { label: 'Critical', value: critical, count: critical, color: '#ef4444' }, // Red-500
+      { label: 'Moderate', value: moderate, count: moderate, color: '#fbbf24' }, // Amber-400
+      { label: 'Low', value: low, count: low, color: '#e4e4e7' }, // Zinc-200
   ].filter(d => d.value > 0);
 
   return (
     <div className="space-y-8 animate-fade-in-up pb-24">
-     
+      
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         <div className="lg:col-span-3 bg-white rounded-3xl shadow-sm border border-zinc-200 p-6 flex flex-col items-center relative overflow-hidden">
-             
+            
              <div className="text-center w-full mb-2">
                  <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Aggregate Risk</h3>
              </div>
@@ -222,7 +221,6 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ data, loading }) => {
                  "{data.riskAssessment.explanation}"
              </p>
         </div>
-
         <div className="lg:col-span-5 bg-white rounded-3xl shadow-sm border border-zinc-200 p-6 flex items-center justify-between">
              <div className="flex-1">
                  <div className="flex items-center gap-2 mb-6">
@@ -299,12 +297,22 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ data, loading }) => {
                   issue.type === IssueType.MISSING ? 'bg-rose-50/30 border-rose-100' : 'bg-white border-zinc-200'
               }`}
             >
+            
               <div className="p-5 flex justify-between items-start gap-4">
                   <div className="flex flex-col gap-2">
                       <IssueTypeBadge type={issue.type} />
                       <h4 className="font-bold text-zinc-900 text-sm leading-tight mt-1">{issue.title}</h4>
                   </div>
-                  <SeverityBadge severity={issue.severity} />
+                  
+                  <div className="flex flex-col items-end gap-1.5">
+                    <SeverityBadge severity={issue.severity} />
+                    {issue.ruleApplied && (
+                        <div className="flex items-center gap-1 bg-zinc-50 border border-zinc-200 px-1.5 py-0.5 rounded text-[9px] font-bold text-zinc-500 uppercase tracking-wide">
+                            <ShieldAlert className="w-3 h-3 text-zinc-400" />
+                            Rule: {issue.ruleApplied}
+                        </div>
+                    )}
+                  </div>
               </div>
 
               <div className="px-5 pb-5 flex-1">
@@ -331,6 +339,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({ data, loading }) => {
                            </div>
                        </div>
                   ) : issue.type === IssueType.MISSING ? (
+                      
                       <div className="bg-rose-50 rounded-xl border border-dashed border-rose-200 p-4 flex flex-col items-center text-center">
                           <FileMinus className="w-6 h-6 text-rose-300 mb-2" />
                           <p className="text-[10px] font-bold text-rose-400 uppercase tracking-widest">Clause Absent</p>
