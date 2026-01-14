@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
-import { AnalysisResponse, Severity, IssueType, AnalysisMode } from "../types";
+import { AnalysisResponse, Severity, IssueType, AnalysisMode, SeverityRule } from "../types";
 
 const analysisSchema: Schema = {
   type: Type.OBJECT,
@@ -74,18 +74,23 @@ const analysisSchema: Schema = {
 };
 
 export const analyzeContracts = async (
-  base64Files: string[],
-  mode: AnalysisMode
+  files: { mimeType: string; data: string }[],
+  mode: AnalysisMode,
+  userRules: SeverityRule[] = []
 ): Promise<AnalysisResponse> => {
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-    const parts = base64Files.map((b64) => ({
+    const parts = files.map((file) => ({
       inlineData: {
-        mimeType: "application/pdf",
-        data: b64,
+        mimeType: file.mimeType,
+        data: file.data,
       },
     }));
+
+    const rulesContext = userRules.filter(r => r.active).map(r => 
+        `- IMPORTANT: Scan specifically for concepts related to "${r.keywords}" or "${r.name}". If found, YOU MUST flag it as an issue with Severity "${r.severity}".`
+    ).join('\n');
 
     let promptText = "";
 
@@ -106,6 +111,9 @@ export const analyzeContracts = async (
         2. deleted protections.
         3. new costs or rules added.
         
+        USER WATCHLIST (PRIORITY):
+        ${rulesContext}
+        
         ${toneInstructions}
 
         Classify findings by Severity.
@@ -119,6 +127,9 @@ export const analyzeContracts = async (
         2. Contradictions (things that don't make sense).
         3. Confusing parts.
         4. Missing protections that should be there.
+
+        USER WATCHLIST (PRIORITY):
+        ${rulesContext}
 
         ${toneInstructions}
 
