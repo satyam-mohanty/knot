@@ -1,3 +1,4 @@
+
 export enum Severity {
   CRITICAL = 'CRITICAL',
   MODERATE = 'MODERATE',
@@ -22,13 +23,14 @@ export interface AnalysisIssue {
   sourceDoc2?: string; 
   pageRef?: string;
   recommendation?: string;
+  ruleApplied?: string; 
 }
 
 export interface RiskAssessment {
   score: number; 
   level: 'LOW' | 'MODERATE' | 'HIGH' | 'CRITICAL';
   financialImpact: string; 
-  legalDomain: string; 
+  legalDomain: string;
   primaryBeneficiary: string; 
   explanation: string; 
 }
@@ -46,3 +48,13 @@ export interface UploadedFile {
 }
 
 export type AnalysisMode = 'ANALYSIS' | 'COMPARISON';
+
+export interface SeverityRule {
+  id: string;
+  name: string;
+  keywords: string; 
+  severity: Severity;
+  active: boolean;
+}
+
+export type RuleStats = Record<string, number>;
